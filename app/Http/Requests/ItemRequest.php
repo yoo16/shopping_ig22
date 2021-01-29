@@ -29,7 +29,7 @@ class ItemRequest extends FormRequest
             'name' => ['required', 'string'],
             'code' => ['required', 'string', Rule::unique('items')->ignore($this->id)],
             'price' => ['required', 'min:0', 'integer'],
-            'amount' => ['required', 'min:0', 'integer'],
+            'amount' => ['min:0', 'integer'],
         ];
     }
 
@@ -37,7 +37,7 @@ class ItemRequest extends FormRequest
     {
         return [
             'name.required' => Lang::get('messages.name_required'),
-            'code.unique' => Lang::get('messages.code_required'),
+            'code.unique' => Lang::get('messages.code_unique'),
             'price.min' => Lang::get('messages.price_invalid'),
             'price.integer' => Lang::get('messages.price_invalid'),
             'amount.min' => Lang::get('messages.amount_invalid'),

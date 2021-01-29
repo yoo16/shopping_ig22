@@ -32,3 +32,7 @@ Route::group([
     Route::get('edit/{id}', 'ItemController@edit')->name('edit');
     Route::post('update/{id}', 'ItemController@update')->name('update');
 });
+
+Route::get('cart/', 'CartController@index')->name('cart.index');
+Route::get('cart/add/{id}', 'CartController@add')->name('cart.add');
+Route::get('cart/clear', 'CartController@clear')->name('cart.clear');
