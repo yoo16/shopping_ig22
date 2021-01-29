@@ -36,3 +36,4 @@ Route::group([
 Route::get('cart/', 'CartController@index')->name('cart.index');
 Route::get('cart/add/{id}', 'CartController@add')->name('cart.add');
 Route::get('cart/clear', 'CartController@clear')->name('cart.clear');
+Route::get('cart/remove/{index}', 'CartController@remove')->name('cart.remove');

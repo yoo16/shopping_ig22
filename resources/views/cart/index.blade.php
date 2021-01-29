@@ -12,7 +12,7 @@
                 <td><img src="{{ asset('images/now_printing.jpg') }}" width="50"></td>
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->price }}</td>
-                <td><a href="" class="btn btn-sm btn-danger">{{ __('Delete') }}</a></td>
+                <td><a href="{{ route('cart.remove', ['index' => $item->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a></td>
             </tr>
             @endforeach
         @endif

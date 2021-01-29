@@ -10,6 +10,7 @@ class CartController extends Controller
 {
     public function index(Request $request) {
         $item_ids = session()->get('item_id');
+        if (!$item_ids) return redirect()->route('home');
         $items = Item::whereIn('id', $item_ids)->get();
         $data = ['items' => $items];
         return view('cart.index', $data);
@@ -17,14 +18,25 @@ class CartController extends Controller
 
     public function add(Request $request)
     {
-        $request->session()->push('item_id', $request->id);
+        $item_ids = $request->session()->get('item_id');
+        $item_ids[$request->id] = $request->id;
+        $request->session()->put('item_id', $item_ids);
+        return redirect()->route('cart.index');
+    }
+
+    public function remove(Request $request)
+    {
+        $item_ids = $request->session()->get('item_id');
+
+        unset($item_ids[$request->index]);
+        session(['item_id' => $item_ids]);
         return redirect()->route('cart.index');
     }
 
     public function clear(Request $request)
     {
         $request->session()->forget('item_id');
-        return redirect()->route('home');
+        return redirect()->route('cart.index');
     }
 
 }
