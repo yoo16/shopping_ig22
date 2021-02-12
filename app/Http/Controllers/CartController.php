@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use App\Models\UserItem;
+use App\Facades\Cart;
 
 class CartController extends Controller
 {
@@ -19,19 +20,7 @@ class CartController extends Controller
     }
 
     public function index(Request $request) {
-        $data = [];
-        if ($request->session()->has('user_items'))
-        {
-            $user_items = UserItem::sessionValues($request);
-            //SELECT * FROM items WHERE id in (xx, xx, xx);
-            $items = Item::WhereIn('id', array_keys($user_items))->get();
-            $total_price = UserItem::calculateTotal($request);
-            $data = [
-                'items' => $items,
-                'user_items' => $user_items,
-                'total_price' => $total_price,
-            ];
-        }
+        $data = Cart::orderList($request);
         return view('cart.index', $data);
     }
 
