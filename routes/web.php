@@ -33,7 +33,12 @@ Route::group([
     Route::post('update/{id}', 'ItemController@update')->name('update');
 });
 
-Route::get('cart/', 'CartController@index')->name('cart.index');
-Route::get('cart/add/{id}', 'CartController@add')->name('cart.add');
-Route::get('cart/clear', 'CartController@clear')->name('cart.clear');
-Route::get('cart/remove/{index}', 'CartController@remove')->name('cart.remove');
+Route::group([
+    'prefix' => 'cart',
+    'as' => 'cart.'
+], function () {
+    Route::get('', 'CartController@index')->name('index');
+    Route::get('add/{id}', 'CartController@add')->name('add');
+    Route::get('remove/{index}', 'CartController@remove')->name('remove');
+    Route::get('clear', 'CartController@clear')->name('clear');
+});
