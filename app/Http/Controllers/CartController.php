@@ -25,9 +25,11 @@ class CartController extends Controller
             $user_items = UserItem::sessionValues($request);
             //SELECT * FROM items WHERE id in (xx, xx, xx);
             $items = Item::WhereIn('id', array_keys($user_items))->get();
+            $total_price = UserItem::calculateTotal($request);
             $data = [
                 'items' => $items,
                 'user_items' => $user_items,
+                'total_price' => $total_price,
             ];
         }
         return view('cart.index', $data);
@@ -50,6 +52,12 @@ class CartController extends Controller
     public function clear(Request $request)
     {
         UserItem::clearCart($request);
+        return redirect()->route('cart.index');
+    }
+
+    public function updates(Request $request)
+    {
+        UserItem::updatesCart($request, $this->user);
         return redirect()->route('cart.index');
     }
 

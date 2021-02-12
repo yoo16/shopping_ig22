@@ -4,6 +4,9 @@
     <div class="container">
         <h2 class="h2">Cart</h2>
 
+        <form action="{{ route('cart.updates') }}" method="post">
+        @csrf
+
         @if (isset($items))
         <button class="btn btn-outline-primary">{{ __('Update') }}</button>
         <a href="{{ route('cart.clear') }}" class="btn btn-danger">{{ __('Clear All') }}</a>
@@ -28,7 +31,7 @@
                 <td>{{ $item->name }}</td>
                 <td>{{ $item->price }}</td>
                 <td>
-                    <input type="number" value="{{ $user_items[$item->id]->amount }}"
+                    <input type="number" name="user_items[{{ $item->id }}]" value="{{ $user_items[$item->id]->amount }}"
                             class="form-control col-3 text-right">
                 </td>
                 <td><a href="{{ route('cart.remove', ['id' => $item->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a></td>
@@ -36,5 +39,6 @@
             @endforeach
         </table>
         @endif
+        </form>
     </div>
 @endsection

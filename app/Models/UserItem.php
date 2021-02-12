@@ -72,6 +72,17 @@ class UserItem extends Model
         UserItem::saveSession($request, $user_item);
     }
 
+    static public function updatesCart(Request $request, User $user)
+    {
+        if (!$request->all()) return;
+        $request_items = $request->all();
+        if (empty($request_items[self::$session_key])) return;
+        foreach ($request_items[self::$session_key] as $item_id => $amount) {
+            $item = Item::find($item_id);
+            UserItem::updateCart($request, $user, $item, $amount);
+        }
+    }
+
     static public function addCart(Request $request, User $user, Item $item)
     {
         $user_item = UserItem::sessionValue($request);
@@ -93,5 +104,16 @@ class UserItem extends Model
     static public function clearCart(Request $request)
     {
         $request->session()->forget(self::$session_key);
+    }
+
+    static public function calculateTotal(Request $request)
+    {
+        $user_items = UserItem::sessionValues($request);
+        $total_price = 0;
+        if (empty($user_items)) return $total_price;
+        foreach ($user_items as $user_item) {
+            $total_price+= $user_item->price * $user_item->amount;
+        }
+        return $total_price;
     }
 }
