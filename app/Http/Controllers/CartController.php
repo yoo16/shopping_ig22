@@ -49,6 +49,7 @@ class CartController extends Controller
 
     public function clear(Request $request)
     {
+        UserItem::clearCart($request);
         return redirect()->route('cart.index');
     }
 

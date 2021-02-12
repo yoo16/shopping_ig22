@@ -90,4 +90,8 @@ class UserItem extends Model
         return $user_items;
     }
 
+    static public function clearCart(Request $request)
+    {
+        $request->session()->forget(self::$session_key);
+    }
 }
