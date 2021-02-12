@@ -35,6 +35,23 @@ class CartController extends Controller
         return view('cart.index', $data);
     }
 
+    public function confirm(Request $request)
+    {
+        $data = [];
+        if ($request->session()->has('user_items'))
+        {
+            $user_items = UserItem::sessionValues($request);
+            $items = Item::WhereIn('id', array_keys($user_items))->get();
+            $total_price = UserItem::calculateTotal($request);
+            $data = [
+                'items' => $items,
+                'user_items' => $user_items,
+                'total_price' => $total_price,
+            ];
+        }
+        return view('cart.confirm', $data);
+    }
+
     public function add(Request $request)
     {
         $item = Item::find($request->id);
