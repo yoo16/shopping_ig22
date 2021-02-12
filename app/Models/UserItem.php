@@ -79,4 +79,15 @@ class UserItem extends Model
         UserItem::updateCart($request, $user, $item, $amount);
     }
 
+    static public function removeCart(Request $request, User $user, Item $item)
+    {
+        if (empty($item)) return;
+        $user_items = UserItem::sessionValues($request);
+        if (isset($user_items[$item->id])) {
+            unset($user_items[$item->id]);
+            $request->session()->put(self::$session_key, $user_items);
+        }
+        return $user_items;
+    }
+
 }

@@ -40,6 +40,6 @@ Route::group([
 ], function () {
     Route::get('', 'CartController@index')->name('index');
     Route::get('add/{id}', 'CartController@add')->name('add');
-    Route::get('remove/{index}', 'CartController@remove')->name('remove');
+    Route::get('remove/{id}', 'CartController@remove')->name('remove');
     Route::get('clear', 'CartController@clear')->name('clear');
 });

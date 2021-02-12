@@ -42,6 +42,8 @@ class CartController extends Controller
 
     public function remove(Request $request)
     {
+        $item = Item::find($request->id);
+        if (isset($item->id)) UserItem::removeCart($request, $this->user, $item);
         return redirect()->route('cart.index');
     }
 

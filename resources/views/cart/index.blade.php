@@ -21,7 +21,7 @@
                     <input type="number" value="{{ $user_items[$item->id]->amount }}"
                             class="form-control col-3 text-right">
                 </td>
-                <td><a href="{{ route('cart.remove', ['index' => $item->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a></td>
+                <td><a href="{{ route('cart.remove', ['id' => $item->id]) }}" class="btn btn-sm btn-danger">{{ __('Delete') }}</a></td>
             </tr>
             @endforeach
         @endif
