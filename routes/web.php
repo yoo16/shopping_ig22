@@ -35,7 +35,8 @@ Route::group([
 
 Route::group([
     'prefix' => 'cart',
-    'as' => 'cart.'
+    'as' => 'cart.',
+    'middleware' => 'auth',
 ], function () {
     Route::get('', 'CartController@index')->name('index');
     Route::get('add/{id}', 'CartController@add')->name('add');
